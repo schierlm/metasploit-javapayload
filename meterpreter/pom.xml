@@ -32,6 +32,7 @@
 	<modules>
 		<module>meterpreter</module>
 		<module>stdapi</module>
+		<module>jailgun</module>
 		<module>debugloader</module>
 		<module>extension-archetype</module>
 	</modules>
