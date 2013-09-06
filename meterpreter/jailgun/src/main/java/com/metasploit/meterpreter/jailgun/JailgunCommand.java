@@ -21,7 +21,7 @@ public abstract class JailgunCommand implements Command {
 			fillResponse(response, value);
 		} catch (JailgunException ex) {
 			response.add(TLVType.TLV_TYPE_JAILGUN_THROWN, Boolean.TRUE);
-			fillResponse(response, ex.getCause());
+			fillResponse(response, ex.myCause);
 		}
 		return ERROR_SUCCESS;
 	}
@@ -45,8 +45,17 @@ public abstract class JailgunCommand implements Command {
 	 * of causing an error.
 	 */
 	public static class JailgunException extends Exception {
+
+		private Throwable myCause;
+
 		public JailgunException(Throwable cause) {
-			super(cause);
+			super(cause == null ? null : cause.toString());
+			this.myCause = cause;
+			try {
+				Throwable.class.getMethod("initCause", new Class[] {Throwable.class}).invoke(this, new Object[] {cause});
+			} catch (Exception ex) {
+				// ignore, Java version too old
+			}
 		}
 	}
 }

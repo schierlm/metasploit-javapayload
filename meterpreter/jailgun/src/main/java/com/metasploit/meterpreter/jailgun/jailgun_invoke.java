@@ -28,7 +28,7 @@ public class jailgun_invoke extends JailgunCommand {
 				return type.getMethod(methodName, argumentTypes).invoke(object, arguments);
 			}
 		} catch (InvocationTargetException ex) {
-			throw new JailgunException(ex.getCause());
+			throw new JailgunException(ex.getTargetException());
 		}
 	}
 }
